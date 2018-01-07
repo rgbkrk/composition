@@ -7,6 +7,7 @@ node_js:
 cache:
   directories:
     - $HOME/.npm
+    - $HOME/.jestcache
     - node_modules
 
 before_install:
@@ -14,7 +15,7 @@ before_install:
 install:
 - npm install
 script:
-- npm run test:coverage
+- npm run test -- --coverage --cacheDirectory=$HOME/.jestcache
 - npm run build:apps
 - npm run test:lint
 - npm run test:flow

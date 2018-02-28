@@ -66,7 +66,7 @@ export const watchExecutionStateEpic = (action$: ActionsObservable<*>) =>
  * @param  {Object}  channels  A object containing the kernel channels
  * @returns  {Observable}  The reply from the server
  */
-export function acquireKernelInfo(channels: Channels, ref?: KernelRef) {
+export function acquireKernelInfo(channels: Channels, ref: KernelRef) {
   const message = createMessage("kernel_info_request");
 
   const obs = channels.pipe(

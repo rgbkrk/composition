@@ -30,6 +30,8 @@ function createApp(jupyterConfigData: JupyterConfigData) {
     componentDidMount(): void {
       const hostRef = state.createHostRef();
       const kernelspecsRef = state.createKernelspecsRef();
+      const kernelRef = state.createKernelRef();
+
       store.dispatch(
         actions.addHost({
           hostRef,
@@ -51,7 +53,8 @@ function createApp(jupyterConfigData: JupyterConfigData) {
       store.dispatch(
         actions.fetchContent({
           path: jupyterConfigData.contentsPath,
-          params: {}
+          params: {},
+          kernelRef
         })
       );
       store.dispatch(actions.fetchKernelspecs({ hostRef, kernelspecsRef }));

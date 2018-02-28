@@ -2,7 +2,7 @@
   "name": "@nteract/core",
   "version": "3.0.1",
   "description": "core modules and components for nteract apps",
-  "main": "lib/index.js",
+  "main": "src/index.js",
   "nteractDesktop": "src/index.js",
   "scripts": {
     "prepare": "npm run build",

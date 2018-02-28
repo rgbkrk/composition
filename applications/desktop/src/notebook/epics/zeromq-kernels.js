@@ -1,5 +1,4 @@
 /* @flow */
-import type { KernelRef } from "@nteract/core/src/state";
 import { unlinkObservable } from "fs-observable";
 
 import type { ChildProcess } from "child_process";
@@ -39,9 +38,16 @@ import { ipcRenderer as ipc } from "electron";
 import { createMainChannel } from "enchannel-zmq-backend";
 import * as jmp from "jmp";
 
-import type { NewKernelAction } from "@nteract/core/src/actionTypes";
+import type {
+  NewKernelAction,
+  InterruptKernel,
+  LaunchKernelAction,
+  LaunchKernelByNameAction,
+  KillKernelAction
+} from "@nteract/core/src/actionTypes";
 
 import type {
+  KernelRef,
   OldKernelInfo,
   OldLocalKernelProps
 } from "@nteract/core/src/state";
@@ -54,12 +60,6 @@ import {
   ofMessageType,
   shutdownRequest
 } from "@nteract/messaging";
-import type {
-  InterruptKernel,
-  LaunchKernelAction,
-  LaunchKernelByNameAction,
-  KillKernelAction
-} from "@nteract/core/src/actionTypes";
 
 /**
  * Instantiate a connection to a new kernel.
@@ -70,7 +70,7 @@ import type {
 export function launchKernelObservable(
   kernelSpec: OldKernelInfo,
   cwd: string,
-  ref?: KernelRef
+  ref: KernelRef
 ) {
   const spec = kernelSpec.spec;
 

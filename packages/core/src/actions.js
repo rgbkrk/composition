@@ -709,7 +709,7 @@ export function newNotebook(payload: {
 export const setNotebook = (payload: {
   filename: ?string,
   notebook: Notebook,
-  kernelRef?: KernelRef
+  kernelRef: KernelRef
 }): SetNotebookAction => ({
   type: actionTypes.SET_NOTEBOOK,
   payload

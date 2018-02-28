@@ -21,7 +21,7 @@ type Props = CodeMirrorEditorProps & {
 function mapStateToProps(
   state: Object,
   ownProps: CodeMirrorEditorProps
-): Object {
+): Props {
   const kernel = selectors.currentKernel(state);
   const { cursorBlinkRate } = selectors.userPreferences(state);
   return {

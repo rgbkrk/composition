@@ -28,6 +28,12 @@ import * as actionTypes from "../actionTypes";
 
 import { executeRequest, kernelInfoRequest } from "@nteract/messaging";
 
+export const startSessionEpic = (action$: *, store: *) =>
+  action$.pipe(
+    // TODO: Could this use a "load contents"
+    ofType(actionTypes.SET_NOTEBOOK)
+  );
+
 export const launchWebSocketKernelEpic = (action$: *, store: *) =>
   action$.pipe(
     ofType(actionTypes.LAUNCH_KERNEL_BY_NAME),

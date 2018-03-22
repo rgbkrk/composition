@@ -4,12 +4,15 @@ import ReactDOM from "react-dom";
 
 import { Provider } from "react-redux";
 import * as Immutable from "immutable";
+const urljoin = require("url-join");
 
 import NotificationSystem from "react-notification-system";
 
 import configureStore from "./store";
 
 import { Styles, actions, state } from "@nteract/core";
+
+import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 
 import { default as Contents } from "./contents";
 
@@ -160,7 +163,12 @@ function main(rootEl: Element, dataEl: Node | null) {
   store.dispatch(actions.fetchKernelspecs({ hostRef, kernelspecsRef }));
 
   const App = createApp(store);
-  ReactDOM.render(<App />, rootEl);
+  ReactDOM.render(
+    <Router basename={urljoin(config.baseUrl, "/nteract")}>
+      <App />
+    </Router>,
+    rootEl
+  );
 }
 
 const rootEl = document.querySelector("#root");

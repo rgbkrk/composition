@@ -4,6 +4,8 @@ import * as React from "react";
 import * as Immutable from "immutable";
 const urljoin = require("url-join");
 
+import { Link } from "react-router-dom";
+
 import TimeAgo from "@nteract/timeago";
 import { Book, FileText, FileDirectory } from "@nteract/octicons";
 
@@ -25,7 +27,7 @@ type DirectoryEntryProps = {
 /**
  * Note: the URLs we create for clicking have to take into account:
  *    Server base URL   e.g. https://j.nteract.io/user/kylek/
- *    App base URL      e.g. /nteract/edit/
+ *    Route path        e.g. /edit/
  *    Filepath          e.g. Untitled.ipynb
  */
 
@@ -50,13 +52,13 @@ class DirectoryEntry extends React.PureComponent<DirectoryEntryProps, *> {
     return (
       <React.Fragment>
         <Icon />
-        <a
-          href={href}
+        <Link
+          to={href}
           // When it's a notebook, we open a new tab
           target={type === "notebook" ? "_blank" : undefined}
         >
           {displayName}
-        </a>
+        </Link>
         <style jsx>{`
           a {
             padding-left: 10px;
@@ -89,10 +91,8 @@ const mapStateToEntryProps = (
     };
   }
 
-  const basePath = host.basePath;
-
   const displayName = entry.filepath.split("/").pop() || "";
-  const href = urljoin(basePath, "/nteract/edit/", entry.filepath);
+  const href = urljoin("/edit/", entry.filepath);
 
   let type = entry.type;
   if (entry.type === "dummy") {
@@ -109,8 +109,7 @@ const mapStateToEntryProps = (
 const ConnectedEntry = connect(mapStateToEntryProps)(DirectoryEntry);
 
 type DirectoryProps = {
-  content: DirectoryContentRecord,
-  basePath: string
+  content: DirectoryContentRecord
 };
 
 export class Directory extends React.PureComponent<DirectoryProps, *> {
@@ -118,8 +117,7 @@ export class Directory extends React.PureComponent<DirectoryProps, *> {
     const atRoot = this.props.content.filepath === "/";
 
     const dotdothref = urljoin(
-      this.props.basePath,
-      "/nteract/edit/",
+      "/edit/",
       urljoin(this.props.content.filepath, "..")
     );
 
@@ -154,11 +152,8 @@ const mapStateToDirectoryProps = (
     throw new Error("This component only works with jupyter servers");
   }
 
-  const basePath = host.basePath;
-
   return {
-    content: selectors.contentByRef(state, ownProps),
-    basePath
+    content: selectors.contentByRef(state, ownProps)
   };
 };
 

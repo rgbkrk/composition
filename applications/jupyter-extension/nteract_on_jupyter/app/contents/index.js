@@ -15,6 +15,8 @@ import {
 import { default as Directory } from "./directory";
 import { default as File } from "./file";
 
+import { withRouter } from "react-router-dom";
+
 type ContentRef = stateModule.ContentRef;
 
 import { connect } from "react-redux";
@@ -66,4 +68,4 @@ class Contents extends React.Component<*, *> {
   }
 }
 
-export default connect(mapStateToProps)(Contents);
+export default withRouter(connect(mapStateToProps)(Contents));

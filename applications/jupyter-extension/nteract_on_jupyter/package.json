@@ -4,6 +4,7 @@
   "description": "nteract on jupyter, as an extension",
   "main": "app/index.js",
   "scripts": {
+    "build:profile": "webpack --profile --json > webpack-stats-nteract-on-jupyter.json",
     "build": "NODE_ENV=production webpack",
     "build:watch": "webpack --watch",
     "dev": "echo 'run a notebook server with this' && npm run build:watch",

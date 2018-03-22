@@ -18,6 +18,7 @@ module.exports = {
       "react",
       "react-dom",
       "react-redux",
+      "codemirror",
       "redux",
       "redux-observable",
       "immutable",

@@ -1,8 +1,6 @@
 // @flow
-
 const configurator = require("@nteract/webpack-configurator");
 
-const LodashModuleReplacementPlugin = require("lodash-webpack-plugin");
 const webpack = require("webpack");
 const path = require("path");
 
@@ -11,26 +9,24 @@ const isProd = nodeEnv === "production";
 
 module.exports = {
   mode: isProd ? "production" : "development",
-  devtool: isProd ? "hidden-source-map" : "cheap-eval-source-map",
-  entry: {
-    app: "./app/index.js",
-    vendor: [
-      "react",
-      "react-dom",
-      "react-redux",
-      "codemirror",
-      "redux",
-      "redux-observable",
-      "immutable",
-      "rxjs",
-      "jquery"
-    ]
-  },
+  entry: "./app/index.js",
   target: "web",
   output: {
     path: path.join(__dirname, "lib"),
-    filename: "[name].js",
-    chunkFilename: "[name].bundle.js"
+    filename: "[name].js"
+  },
+  optimization: {
+    runtimeChunk: "single",
+    splitChunks: {
+      cacheGroups: {
+        vendors: {
+          test: /[\\/]node_modules[\\/]/,
+          name: "vendors",
+          enforce: true,
+          chunks: "all"
+        }
+      }
+    }
   },
   module: {
     rules: [
@@ -48,12 +44,6 @@ module.exports = {
   },
   plugins: [
     new webpack.HashedModuleIdsPlugin(),
-
-    new webpack.IgnorePlugin(/\.(css|less)$/),
-
-    new webpack.SourceMapDevToolPlugin({
-      filename: "[name].js.map",
-      exclude: ["vendor.js"]
-    })
+    new webpack.IgnorePlugin(/\.(css|less)$/)
   ]
 };

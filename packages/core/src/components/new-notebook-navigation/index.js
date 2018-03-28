@@ -12,29 +12,33 @@
 
 import * as React from "react";
 
-import type { KernelspecProps } from "../../state/entities/kernelspecs";
+import { connect } from "react-redux";
 
-import * as logos from "./logos";
+import type { AppState } from "../../state";
+
+import type { KernelspecRecord } from "../../state/entities/kernelspecs";
+
+import { default as Logo } from "./logos";
+
+import * as Immutable from "immutable";
 
 export type AvailableNotebook = {
-  kernelspec: KernelspecProps
+  kernelspec: KernelspecRecord
 };
 
-export type AvailableNotebooks = Array<AvailableNotebook>;
+export type AvailableNotebooks = Immutable.List<AvailableNotebook>;
 
 export const NewNotebook = (
   props: AvailableNotebook & {
     href?: string,
-    onClick?: (ks: KernelspecProps) => void
+    onClick?: (ks: KernelspecRecord) => void
   }
 ) => {
-  const Logo = logos.builtins[props.kernelspec.language];
-
   const inner = (
     <React.Fragment>
       <div className="display-name">{props.kernelspec.displayName}</div>
       <div className="logo">
-        <Logo />
+        <Logo language={props.kernelspec.language} />
       </div>
     </React.Fragment>
   );
@@ -126,7 +130,7 @@ const NotebookCollection = (props: { children: React.Node }) => (
 
 export const NewNotebookNavigation = (props: {
   availableNotebooks: AvailableNotebooks,
-  onClick?: (ks: KernelspecProps) => void
+  onClick?: (ks: KernelspecRecord) => void
 }) => (
   <React.Fragment>
     <div className="banner">
@@ -156,4 +160,22 @@ export const NewNotebookNavigation = (props: {
   </React.Fragment>
 );
 
-export default NewNotebookNavigation;
+const mapStateToProps = (state: AppState) => {
+  const availableKernels = state.core.entities.kernelspecs.byRef
+    .flatMap((kss, ksRef) => {
+      return kss.byName.map((ks, name) => {
+        return { kernelspec: ks };
+      });
+    })
+    .toList();
+
+  return {
+    availableNotebooks: availableKernels
+  };
+};
+
+const mapDispatchToProps = dispatch => ({});
+
+export default connect(mapStateToProps, mapDispatchToProps)(
+  NewNotebookNavigation
+);

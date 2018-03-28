@@ -25,10 +25,12 @@ export const makeKernelspec: RecordFactory<KernelspecProps> = Record({
   resources: Map()
 });
 
+export type KernelspecRecord = RecordOf<KernelspecProps>;
+
 export type KernelspecsByRefRecordProps = {
   hostRef: ?HostRef,
   defaultKernelName: string,
-  byName: Map<string, RecordOf<KernelspecProps>>
+  byName: Map<string, KernelspecRecord>
 };
 
 export const makeKernelspecsByRefRecord: RecordFactory<
@@ -50,3 +52,5 @@ export const makeKernelspecsRecord: RecordFactory<
   byRef: Map(),
   refs: List()
 });
+
+export type KernelSpecsRecord = RecordOf<KernelspecsRecordProps>;

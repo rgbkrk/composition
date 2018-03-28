@@ -9,7 +9,8 @@ import {
   actions,
   TitleBar,
   NotebookApp,
-  NotebookMenu
+  NotebookMenu,
+  NewNotebookNavigation
 } from "@nteract/core";
 
 import { default as Directory } from "./directory";
@@ -69,6 +70,7 @@ class Contents extends React.Component<*, *> {
         return (
           <React.Fragment>
             <TitleBar />
+            <NewNotebookNavigation />
             <Directory contentRef={this.props.contentRef} />
           </React.Fragment>
         );

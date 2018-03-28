@@ -86,10 +86,17 @@ export const ScalaLogo = () => (
   </svg>
 );
 
-/**
- * maps kernelspec.language -> logo
- */
-export const builtins = {
-  scala: ScalaLogo,
-  python: PythonLogo
+export default function Logo({ language }: { language: string }) {
+  switch (language) {
+    case "scala":
+      return <ScalaLogo />;
+    case "python":
+      return <PythonLogo />;
+    default:
+      return <svg />;
+  }
+}
+
+Logo.defaultProps = {
+  language: ""
 };

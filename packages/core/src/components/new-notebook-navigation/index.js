@@ -49,6 +49,9 @@ export const NewNotebook = (
         .display-name {
           margin-bottom: 10px;
           font-size: 0.8em;
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
         }
 
         .logo {

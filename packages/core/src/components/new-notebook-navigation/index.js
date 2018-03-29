@@ -46,8 +46,13 @@ export const NewNotebook = (
         <Logo language={props.kernelspec.language} />
       </div>
       <style jsx>{`
+        .display-name {
+          margin-bottom: 10px;
+          font-size: 0.8em;
+        }
+
         .logo {
-          width: 5em;
+          width: 3em;
           box-sizing: border-box;
           margin: 0 auto;
         }
@@ -86,8 +91,8 @@ export const NewNotebook = (
           text-align: center;
           font-family: var(--nt-font-family-normal);
           background-color: var(--nt-color-midnight-lightest);
-          height: 212px;
-          width: 150px;
+          height: 7.07em;
+          width: 5em;
           color: var(--nt-color-midnight-light);
 
           margin-right: 20px;
@@ -110,10 +115,6 @@ export const NewNotebook = (
         .newNotebook:hover {
           background-color: var(--nt-color-midnight-lighter);
         }
-
-        .display-name {
-          padding-bottom: 30px;
-        }
       `}</style>
     </React.Fragment>
   );
@@ -129,7 +130,7 @@ const NotebookCollection = (props: { children: React.Node }) => (
     <style jsx>{`
       .collection {
         margin: 20px 0px 20px 0px;
-        height: 240px;
+        height: 10em;
 
         box-sizing: border-box;
 

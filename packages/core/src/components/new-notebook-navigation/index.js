@@ -45,12 +45,6 @@ export const NewNotebook = (
       <div className="logo">
         <Logo language={props.kernelspec.language} />
       </div>
-      <style jsx>{`
-        .logo {
-          padding-right: 20px;
-          margin-right: 30px;
-        }
-      `}</style>
     </React.Fragment>
   );
 
@@ -88,7 +82,9 @@ export const NewNotebook = (
           height: 212px;
           width: 150px;
           color: var(--nt-color-midnight-light);
-          padding-right: 20px;
+
+          margin-right: 20px;
+          flex: 0 0 auto;
 
           --logo-off: currentColor;
         }
@@ -125,6 +121,12 @@ const NotebookCollection = (props: { children: React.Node }) => (
       .collection {
         margin: 20px 0px 20px 0px;
         height: 240px;
+
+        display: flex;
+        flex-wrap: nowrap;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        -ms-overflow-style: -ms-autohiding-scrollbar;
       }
     `}</style>
   </div>

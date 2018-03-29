@@ -114,15 +114,28 @@ export const ScalaLogo = () => (
   </SVGWrapper>
 );
 
+function hashCode(str: string): number {
+  let hash = 0;
+  for (var i = 0; i < str.length; i++) {
+    hash = str.charCodeAt(i) + ((hash << 5) - hash);
+  }
+  return hash;
+}
+
+function pickColor(str: string): string {
+  return `hsl(${hashCode(str) % 360}, 100%, 30%)`;
+}
+
 export const PlaceholderLogo = (props: { language: string }) => {
-  const character = (props.language
-    ? props.language.charAt(0)
-    : "k"
-  ).toUpperCase();
+  const strokeColor = pickColor(props.language || "k");
 
   return (
     <SVGWrapper viewBox="0 0 20 20">
-      <g stroke="var(--logo-off, orange)" fillOpacity="0" stroke-width="2">
+      <g
+        stroke={`var(--logo-off, ${strokeColor})`}
+        fillOpacity="0"
+        strokeWidth="2"
+      >
         <circle cx="10" cy="10" r="5" />
       </g>
     </SVGWrapper>

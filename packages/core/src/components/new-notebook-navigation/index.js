@@ -45,6 +45,13 @@ export const NewNotebook = (
       <div className="logo">
         <Logo language={props.kernelspec.language} />
       </div>
+      <style jsx>{`
+        .logo {
+          width: 5em;
+          box-sizing: border-box;
+          margin: 0 auto;
+        }
+      `}</style>
     </React.Fragment>
   );
 
@@ -86,6 +93,8 @@ export const NewNotebook = (
           margin-right: 20px;
           flex: 0 0 auto;
 
+          box-sizing: border-box;
+
           --logo-off: currentColor;
         }
 
@@ -121,6 +130,8 @@ const NotebookCollection = (props: { children: React.Node }) => (
       .collection {
         margin: 20px 0px 20px 0px;
         height: 240px;
+
+        box-sizing: border-box;
 
         display: flex;
         flex-wrap: nowrap;
@@ -180,6 +191,9 @@ const mapStateToProps = (state: AppState) => {
 
 const mapDispatchToProps = dispatch => ({});
 
-export default connect(mapStateToProps, mapDispatchToProps)(
-  PureNewNotebookNavigation
-);
+export const NewNotebookNavigation = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(PureNewNotebookNavigation);
+
+export default NewNotebookNavigation;

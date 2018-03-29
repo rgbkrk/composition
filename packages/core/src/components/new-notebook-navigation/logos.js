@@ -27,8 +27,8 @@ import * as React from "react";
 type WrapperProps<T> = {
   children: React.ChildrenArray<T>,
   outerProps: any,
-  width: number,
-  height: number,
+  width?: number | string,
+  height?: number | string,
   viewBox: string
 };
 
@@ -56,7 +56,7 @@ export const SVGWrapper = (props: WrapperProps<*>) => {
 };
 
 export const PythonLogo = (props: *) => (
-  <SVGWrapper width={110} height={110} viewBox="0 0 110 110" outerProps={props}>
+  <SVGWrapper width={"100%"} viewBox="0 0 110 110" outerProps={props}>
     <g color="#000">
       <path
         style={{ marker: "none" }}
@@ -81,9 +81,8 @@ export const ScalaLogo = (props: *) => (
   <SVGWrapper
     xmlns="http://www.w3.org/2000/svg"
     // preserveAspectRatio="xMinYMin meet"
-    viewBox="0 0 256 416"
-    height={120}
-    width={110}
+    viewBox="-80 0 416 416"
+    width={"100%"}
     outerProps={props}
   >
     <path

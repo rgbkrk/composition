@@ -6,12 +6,12 @@ import {
   state as stateModule,
   themes,
   PureTitleBar,
-  NewNotebookNavigation
+  PureNewNotebookNavigation
 } from "@nteract/core";
 
 import { List, Map, Record } from "immutable";
 
-const availableNotebooks = [
+const availableNotebooks = List([
   {
     kernelspec: {
       name: "python3",
@@ -48,7 +48,7 @@ const availableNotebooks = [
       interruptMode: "yes"
     }
   }
-];
+]);
 
 class NavigationDemo extends React.Component<*, *> {
   static defaultProps = {
@@ -59,7 +59,7 @@ class NavigationDemo extends React.Component<*, *> {
     return (
       <Styles>
         <PureTitleBar />
-        <NewNotebookNavigation
+        <PureNewNotebookNavigation
           availableNotebooks={availableNotebooks}
           onClick={ks => console.log(ks)}
         />

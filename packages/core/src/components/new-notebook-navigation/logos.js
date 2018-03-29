@@ -1,5 +1,7 @@
 // @flow
 
+import * as React from "react";
+
 /**
  * TODO: Establish a new resources spec for SVG logos used in kernel "cards".
  *
@@ -22,13 +24,39 @@
  * is to add another logo in a PR. 🎉
  */
 
-export const PythonLogo = () => (
-  <svg
-    xmlns="http://www.w3.org/2000/svg"
-    width="110.4211"
-    height="109.8461"
-    version="1"
-  >
+type WrapperProps<T> = {
+  children: React.ChildrenArray<T>,
+  outerProps: any,
+  width: number,
+  height: number,
+  viewBox: string
+};
+
+export const SVGWrapper = (props: WrapperProps<*>) => {
+  return (
+    <span>
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width={props.width}
+        height={props.height}
+        viewBox={props.viewBox}
+        {...props.outerProps}
+        style={Object.assign(
+          {
+            display: "inline-block",
+            verticalAlign: "text-bottom"
+          },
+          props.outerProps.style
+        )}
+      >
+        {props.children}
+      </svg>
+    </span>
+  );
+};
+
+export const PythonLogo = (props: *) => (
+  <SVGWrapper width={110} height={110} viewBox="0 0 110 110" outerProps={props}>
     <g color="#000">
       <path
         style={{ marker: "none" }}
@@ -46,15 +74,17 @@ export const PythonLogo = () => (
         fillOpacity="0.7"
       />
     </g>
-  </svg>
+  </SVGWrapper>
 );
 
-export const ScalaLogo = () => (
-  <svg
+export const ScalaLogo = (props: *) => (
+  <SVGWrapper
     xmlns="http://www.w3.org/2000/svg"
-    preserveAspectRatio="xMinYMin meet"
+    // preserveAspectRatio="xMinYMin meet"
     viewBox="0 0 256 416"
-    height="120"
+    height={120}
+    width={110}
+    outerProps={props}
   >
     <path
       fill="var(--logo-off, black)"
@@ -83,7 +113,7 @@ export const ScalaLogo = () => (
       d="M0 352v-96c0 8 256 24 256 64v96c0-40-256-56-256-64"
       transform="matrix(1 0 0 -1 0 672)"
     />
-  </svg>
+  </SVGWrapper>
 );
 
 export default function Logo({ language }: { language: string }) {

@@ -16,22 +16,27 @@ import { connect } from "react-redux";
 
 import type { AppState } from "../../state";
 
-import type { KernelspecRecord } from "../../state/entities/kernelspecs";
+import type {
+  KernelspecRecord,
+  KernelspecProps
+} from "../../state/entities/kernelspecs";
 
 import { default as Logo } from "./logos";
 
 import * as Immutable from "immutable";
 
 export type AvailableNotebook = {
-  kernelspec: KernelspecRecord
+  kernelspec: KernelspecRecord | KernelspecProps
 };
 
-export type AvailableNotebooks = Immutable.List<AvailableNotebook>;
+export type AvailableNotebooks =
+  | Immutable.List<AvailableNotebook>
+  | Array<AvailableNotebook>;
 
 export const NewNotebook = (
   props: AvailableNotebook & {
     href?: string,
-    onClick?: (ks: KernelspecRecord) => void
+    onClick?: (ks: KernelspecRecord | KernelspecProps) => void
   }
 ) => {
   const inner = (
@@ -40,6 +45,12 @@ export const NewNotebook = (
       <div className="logo">
         <Logo language={props.kernelspec.language} />
       </div>
+      <style jsx>{`
+        .logo {
+          padding-right: 20px;
+          margin-right: 30px;
+        }
+      `}</style>
     </React.Fragment>
   );
 
@@ -77,10 +88,7 @@ export const NewNotebook = (
           height: 212px;
           width: 150px;
           color: var(--nt-color-midnight-light);
-
-          margin-right: 20px;
-
-          flex: 0 0 auto;
+          padding-right: 20px;
 
           --logo-off: currentColor;
         }
@@ -117,20 +125,14 @@ const NotebookCollection = (props: { children: React.Node }) => (
       .collection {
         margin: 20px 0px 20px 0px;
         height: 240px;
-
-        display: flex;
-        flex-wrap: nowrap;
-        overflow-x: auto;
-        -webkit-overflow-scrolling: touch;
-        -ms-overflow-style: -ms-autohiding-scrollbar;
       }
     `}</style>
   </div>
 );
 
-export const NewNotebookNavigation = (props: {
+export const PureNewNotebookNavigation = (props: {
   availableNotebooks: AvailableNotebooks,
-  onClick?: (ks: KernelspecRecord) => void
+  onClick?: (ks: KernelspecRecord | KernelspecProps) => void
 }) => (
   <React.Fragment>
     <div className="banner">
@@ -177,5 +179,5 @@ const mapStateToProps = (state: AppState) => {
 const mapDispatchToProps = dispatch => ({});
 
 export default connect(mapStateToProps, mapDispatchToProps)(
-  NewNotebookNavigation
+  PureNewNotebookNavigation
 );

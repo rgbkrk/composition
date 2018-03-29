@@ -55,8 +55,13 @@ export const SVGWrapper = (props: WrapperProps<*>) => {
   );
 };
 
-export const PythonLogo = (props: *) => (
-  <SVGWrapper width={"100%"} viewBox="0 0 110 110" outerProps={props}>
+SVGWrapper.defaultProps = {
+  width: "100%",
+  outerProps: {}
+};
+
+export const PythonLogo = () => (
+  <SVGWrapper viewBox="0 0 110 110">
     <g color="#000">
       <path
         style={{ marker: "none" }}
@@ -77,14 +82,8 @@ export const PythonLogo = (props: *) => (
   </SVGWrapper>
 );
 
-export const ScalaLogo = (props: *) => (
-  <SVGWrapper
-    xmlns="http://www.w3.org/2000/svg"
-    // preserveAspectRatio="xMinYMin meet"
-    viewBox="-80 0 416 416"
-    width={"100%"}
-    outerProps={props}
-  >
+export const ScalaLogo = () => (
+  <SVGWrapper viewBox="-80 0 416 416">
     <path
       fill="var(--logo-off, black)"
       fillOpacity="0.7"
@@ -115,6 +114,21 @@ export const ScalaLogo = (props: *) => (
   </SVGWrapper>
 );
 
+export const PlaceholderLogo = (props: { language: string }) => {
+  const character = (props.language
+    ? props.language.charAt(0)
+    : "k"
+  ).toUpperCase();
+
+  return (
+    <SVGWrapper viewBox="0 0 20 20">
+      <g stroke="var(--logo-off, orange)" fillOpacity="0" stroke-width="2">
+        <circle cx="10" cy="10" r="5" />
+      </g>
+    </SVGWrapper>
+  );
+};
+
 export default function Logo({ language }: { language: string }) {
   switch (language) {
     case "scala":
@@ -122,7 +136,7 @@ export default function Logo({ language }: { language: string }) {
     case "python":
       return <PythonLogo />;
     default:
-      return <svg />;
+      return <PlaceholderLogo language={language} />;
   }
 }
 

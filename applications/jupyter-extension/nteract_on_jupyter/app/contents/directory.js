@@ -49,20 +49,48 @@ class DirectoryEntry extends React.PureComponent<DirectoryEntryProps, *> {
 
     return (
       <React.Fragment>
-        <Icon />
         <a
           href={href}
           // When it's a notebook, we open a new tab
           target={type === "notebook" ? "_blank" : undefined}
         >
-          {displayName}
+          <span>
+            <Icon width={18} height={18} />
+          </span>
+          <span>{displayName}</span>
         </a>
         <style jsx>{`
           a {
-            padding-left: 10px;
+            display: flex;
+            flex-direction: row;
+            box-sizing: border-box;
+            width: 100%;
+            height: 40px;
+            justify-content: flex-start;
+            align-items: stretch;
             text-decoration: none;
             color: var(--theme-app-fg);
             background-color: var(--theme-app-bg);
+          }
+          a:hover,
+          a:focus {
+            background-color: var(--theme-primary-bg-hover);
+          }
+          a > span:first-child {
+            width: 40px;
+            padding: 0 10px 0 10px;
+            color: var(--theme-primary-fg);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+          }
+          a > span:last-child {
+            flex: 1;
+            margin-left: 20px;
+            display: flex;
+            flex-direction: row;
+            justify-content: flex-start;
+            align-items: center;
           }
         `}</style>
       </React.Fragment>
@@ -129,7 +157,13 @@ export class Directory extends React.PureComponent<DirectoryProps, *> {
         {atRoot ? null : (
           // TODO: Create a contentRef for `..`, even though it's a placeholder
           // When we're not at the root of the tree, show `..`
-          <DirectoryEntry href={dotdothref} displayName=".." type="directory" />
+          <li>
+            <DirectoryEntry
+              href={dotdothref}
+              displayName=".."
+              type="directory"
+            />
+          </li>
         )}
         {this.props.content.model.items.map(contentRef => (
           <li key={contentRef}>
@@ -139,6 +173,12 @@ export class Directory extends React.PureComponent<DirectoryProps, *> {
         <style jsx>{`
           ul {
             list-style-type: none;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            flex-wrap: wrap;
+            height: ${40 *
+              ((this.props.content.model.items.size + (atRoot ? 0 : 1)) / 2)}px;
           }
         `}</style>
       </ul>

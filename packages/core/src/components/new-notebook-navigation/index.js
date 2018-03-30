@@ -103,12 +103,6 @@ export const NewNotebook = (
 
           box-sizing: border-box;
 
-          --logo-off: currentColor;
-        }
-
-        .newNotebook:focus,
-        .newNotebook:hover {
-          --logo-off: unset;
         }
 
         .newNotebook:focus {

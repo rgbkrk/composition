@@ -6,7 +6,7 @@ import * as React from "react";
 import * as actions from "../actions";
 import * as selectors from "../selectors";
 const themes = require("../themes");
-import type { ContentRef } from "../state/refs";
+import type { ContentRef, KernelRef } from "../state/refs";
 
 import { Input, Prompt, Source, Pagers, Outputs, Cell } from "./presentational";
 
@@ -287,7 +287,8 @@ type PureNotebookProps = {
   // TODO: Once we're willing to do multi-contents views, we should require this
   //       to be passed in
   // TODO: Fill in more from the convo with Andrew here
-  contentRef?: ContentRef
+  contentRef?: ContentRef,
+  kernelRef?: KernelRef
 };
 
 type NotebookStateProps = {
@@ -299,7 +300,8 @@ type NotebookStateProps = {
   languageDisplayName: string,
   kernelStatus: string,
   codeMirrorMode: string | Immutable.Map<string, *>,
-  contentRef: ContentRef
+  contentRef: ContentRef,
+  kernelRef: KernelRef
 };
 
 type NotebookDispatchProps = {
@@ -316,6 +318,8 @@ const mapStateToProps = (
 ): NotebookStateProps => {
   // TODO: Switch to ownProps
   const contentRef = ownProps.contentRef || selectors.currentContentRef(state);
+  const kernelRef = ownProps.kernelRef || selectors.currentKernelRef(state);
+
   if (!contentRef) {
     throw new Error("<Notebook /> has to have a contentRef");
   }
@@ -328,17 +332,22 @@ const mapStateToProps = (
     );
   }
 
+  if (!kernelRef) {
+    throw new Error("<Notebook /> needs a kernelRef");
+  }
+
   if (model.type === "dummy" || model.type === "unknown") {
     return {
       theme: selectors.userPreferences(state).theme,
       lastSaved: content.lastSaved,
       cellOrder: Immutable.List(),
       // TODO: deal with current kernel ref
-      kernelStatus: selectors.currentKernelStatus(state),
+      kernelStatus: "unknown",
       languageDisplayName: "unknown",
       transforms: ownProps.transforms || transforms,
       displayOrder: ownProps.displayOrder || displayOrder,
       codeMirrorMode: Immutable.Map({ name: "text/plain" }),
+      kernelRef,
       contentRef
     };
   }
@@ -349,17 +358,33 @@ const mapStateToProps = (
     );
   }
 
+  const kernel = selectors.kernel(state, { kernelRef });
+
+  if (!kernel) {
+    throw new Error("aw geez, we don't have a kernel");
+  }
+
+  console.log(kernel);
+
+  // NOTE: We should use what the kernel reports before using what the notebook "reports"
+  // TODO: The kernel object should contain it's own information
+  const languageDisplayName =
+    kernel.kernelSpecName || selectors.notebook.displayName(model);
+  // TODO: Rely on the kernel's codeMirror version first and foremost, then fallback on notebook
+  const codeMirrorMode = selectors.notebook.codeMirrorMode(model);
+
   return {
     theme: selectors.userPreferences(state).theme,
     lastSaved: content.lastSaved,
     cellOrder: selectors.notebook.cellOrder(model),
     // TODO: deal with current kernel ref
-    kernelStatus: selectors.currentKernelStatus(state),
-    languageDisplayName: selectors.notebook.displayName(model),
+    kernelStatus: kernel.status || "not connected",
+    languageDisplayName,
     transforms: ownProps.transforms || transforms,
     displayOrder: ownProps.displayOrder || displayOrder,
-    codeMirrorMode: selectors.notebook.codeMirrorMode(model),
-    contentRef
+    codeMirrorMode,
+    contentRef,
+    kernelRef
   };
 };
 
@@ -385,6 +410,7 @@ export class NotebookApp extends React.PureComponent<NotebookProps> {
     (this: any).createCellElement = this.createCellElement.bind(this);
     (this: any).keyDown = this.keyDown.bind(this);
     (this: any).renderCell = this.renderCell.bind(this);
+    console.log("wtf mate");
   }
 
   componentDidMount(): void {

@@ -39,30 +39,6 @@ export const NewNotebook = (
     onClick?: (ks: KernelspecRecord | KernelspecProps) => void
   }
 ) => {
-  const inner = (
-    <React.Fragment>
-      <div className="display-name">{props.kernelspec.displayName}</div>
-      <div className="logo">
-        <Logo language={props.kernelspec.language} />
-      </div>
-      <style jsx>{`
-        .display-name {
-          margin-bottom: 10px;
-          font-size: 0.8em;
-          white-space: nowrap;
-          overflow: hidden;
-          text-overflow: ellipsis;
-        }
-
-        .logo {
-          width: 3em;
-          box-sizing: border-box;
-          margin: 0 auto;
-        }
-      `}</style>
-    </React.Fragment>
-  );
-
   const onClick = () => {
     if (props.onClick) {
       props.onClick(props.kernelspec);
@@ -71,45 +47,97 @@ export const NewNotebook = (
 
   return (
     <React.Fragment>
-      {props.href ? (
-        <a className="newNotebook" href={props.href}>
-          {inner}
-        </a>
-      ) : (
-        <button className="newNotebook" onClick={onClick}>
-          {inner}
-        </button>
-      )}
+      <div tabIndex={0} className="new-notebook" onClick={onClick}>
+        <div className="logo-box">
+          <div className="logo">
+            <Logo language={props.kernelspec.language} />
+          </div>
+        </div>
+        <div className="text-box">
+          <p className="display-name-short" title={props.kernelspec.language}>
+            {props.kernelspec.language}
+          </p>
+          <p className="display-name-long" title={props.kernelspec.displayName}>
+            {props.kernelspec.displayName}
+          </p>
+        </div>
+      </div>
       <style jsx>{`
-        .newNotebook :global(*) {
+        .new-notebook :global(*) {
           color: var(--nt-color-midnight-light);
+          cursor: pointer;
         }
 
         a {
           padding-top: 20px;
         }
 
-        .newNotebook {
-          font-size: 20px;
-          text-align: center;
+        .new-notebook {
           font-family: var(--nt-font-family-normal);
-          background-color: var(--nt-color-midnight-lightest);
-          width: 7.07em;
-          height: 7.07em;
           color: var(--nt-color-midnight-light);
-
           margin: 20px 20px 0 0;
           flex: 0 0 auto;
-
           box-sizing: border-box;
+          display: flex;
+          flex-direction: column;
+          height: 220px;
+          width: 150px;
         }
 
-        .newNotebook:focus {
-          outline: 1px solid var(--nt-color-midnight-lighter);
+        .new-notebook:hover {
+          box-shadow: var(--theme-primary-shadow-hover);
         }
 
-        .newNotebook:hover {
-          background-color: var(--nt-color-midnight-lighter);
+        .new-notebook:focus {
+          box-shadow: var(--theme-primary-shadow-focus);
+        }
+        .logo {
+          width: 3em;
+          box-sizing: border-box;
+          margin: 0 auto;
+        }
+
+        .logo-box {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          font-size: 30px;
+          background-color: var(--theme-app-bg);
+          flex: 1;
+        }
+
+        .text-box {
+          padding: 8px 6px 8px 6px;
+          font-size: 0.8em;
+          width: 150px;
+          box-sizing: border-box;
+          background-color: var(--theme-primary-bg);
+          border-top: 1px solid var(--theme-app-border);
+        }
+
+        .display-name-short {
+          text-transform: capitalize;
+          margin: 0 5px 0 0;
+          font-weight: 600;
+          color: var(--theme-app-fg);
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+        }
+
+        .display-name-long {
+          margin: 0;
+          color: var(--theme-primary-fg);
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+        }
+
+        .new-notebook:hover .display-name-long,
+        .new-notebook:focus .display-name-long {
+          white-space: initial;
+          overflow: initial;
+          text-overflow: initial;
         }
       `}</style>
     </React.Fragment>
@@ -126,9 +154,8 @@ const NotebookCollection = (props: { children: React.Node }) => (
     <style jsx>{`
       .collection {
         padding: 0 0 20px 0;
-
         box-sizing: border-box;
-
+        min-width: 0;
         display: flex;
         flex-direction: row;
         flex-wrap: wrap;

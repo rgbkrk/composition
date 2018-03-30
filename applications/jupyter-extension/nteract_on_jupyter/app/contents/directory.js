@@ -174,12 +174,7 @@ export class Directory extends React.PureComponent<DirectoryProps, *> {
           ul {
             list-style-type: none;
             padding: 0;
-            display: flex;
-            flex-direction: column;
-            flex-wrap: wrap;
-            height: ${40 *
-              ((this.props.content.model.items.size + (atRoot ? 0 : 1)) / 2)}px;
-            min-height: ${40 * 6}px;
+            margin: 0;
           }
         `}</style>
       </ul>

@@ -9,7 +9,7 @@ import NotificationSystem from "react-notification-system";
 
 import configureStore from "./store";
 
-import { Styles, actions, state } from "@nteract/core";
+import { Styles, actions, state, themes } from "@nteract/core";
 
 import { default as Contents } from "./contents";
 
@@ -30,6 +30,7 @@ function createApp(store: *) {
               }}
             />
             <style jsx global>{`
+              :root {${themes.light}}
               body {
                 font-family: "Source Sans Pro";
                 font-size: 16px;

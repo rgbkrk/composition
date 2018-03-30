@@ -179,6 +179,7 @@ export class Directory extends React.PureComponent<DirectoryProps, *> {
             flex-wrap: wrap;
             height: ${40 *
               ((this.props.content.model.items.size + (atRoot ? 0 : 1)) / 2)}px;
+            min-height: ${40 * 6}px;
           }
         `}</style>
       </ul>

@@ -94,15 +94,14 @@ export const NewNotebook = (
           text-align: center;
           font-family: var(--nt-font-family-normal);
           background-color: var(--nt-color-midnight-lightest);
+          width: 7.07em;
           height: 7.07em;
-          width: 5em;
           color: var(--nt-color-midnight-light);
 
-          margin-right: 20px;
+          margin: 20px 20px 0 0;
           flex: 0 0 auto;
 
           box-sizing: border-box;
-
         }
 
         .newNotebook:focus {
@@ -126,14 +125,14 @@ const NotebookCollection = (props: { children: React.Node }) => (
     {props.children}
     <style jsx>{`
       .collection {
-        margin: 20px 0px 20px 0px;
-        height: 10em;
+        padding: 0 0 20px 0;
 
         box-sizing: border-box;
 
         display: flex;
-        flex-wrap: nowrap;
-        overflow-x: auto;
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: flex-start;
         -webkit-overflow-scrolling: touch;
         -ms-overflow-style: -ms-autohiding-scrollbar;
       }

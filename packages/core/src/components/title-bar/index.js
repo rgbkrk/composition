@@ -16,6 +16,33 @@ type TitleBarProps = {
   logoTitle?: string
 };
 
+export const TitleSection = (props: { children: React.Node }) => {
+  return (
+    <React.Fragment>
+      <span className="section">{props.children}</span>
+      <style jsx>{`
+        .section {
+          display: inline-block;
+          vertical-align: top;
+          /* width will be based on the parent container and number of items */
+        }
+      `}</style>
+    </React.Fragment>
+  );
+};
+
+export const CompositeTitle = (props: {
+  children: React.ChildrenArray<React.Node>
+}) => {
+  return (
+    <React.Fragment>
+      {React.Children.map(props.children, child => {
+        return child;
+      })}
+    </React.Fragment>
+  );
+};
+
 export const TitleBar = (props: TitleBarProps) => (
   <React.Fragment>
     <header>
@@ -27,7 +54,7 @@ export const TitleBar = (props: TitleBarProps) => (
       </span>
       <span className="center" />
       <span className="right">
-        <p>Last Saved WTF</p>
+        <p>Last Saved:</p>
       </span>
     </header>
     <style jsx>{`

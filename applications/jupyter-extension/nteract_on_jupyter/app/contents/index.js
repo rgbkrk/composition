@@ -16,6 +16,8 @@ import {
   NewNotebookNavigation
 } from "@nteract/core";
 
+import { CompositeTitle, TitleSection } from "../composite";
+
 // TODO: Make a proper epic
 import { contents, sessions } from "rx-jupyter";
 const urljoin = require("url-join");
@@ -215,6 +217,32 @@ class Contents extends React.Component<ContentsProps, null> {
       case "file":
         return (
           <React.Fragment>
+            <CompositeTitle>
+              <TitleSection>
+                <a>nteract</a>
+              </TitleSection>
+              <TitleSection>
+                <span>1</span>
+              </TitleSection>
+              <TitleSection>
+                <span>2</span>
+              </TitleSection>
+              <TitleSection>
+                <span>3</span>
+              </TitleSection>
+              <TitleSection>
+                <span>4</span>
+              </TitleSection>
+              <TitleSection>
+                <span>5</span>
+              </TitleSection>
+              <TitleSection>
+                <span>6</span>
+              </TitleSection>
+              <TitleSection>
+                <span>7</span>
+              </TitleSection>
+            </CompositeTitle>
             <TitleBar
               logoHref={urljoin(
                 this.props.appPath,

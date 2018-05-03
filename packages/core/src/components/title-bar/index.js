@@ -19,27 +19,57 @@ type TitleBarProps = {
 export const TitleBar = (props: TitleBarProps) => (
   <React.Fragment>
     <header>
-      <a href={props.logoHref} title={props.logoTitle}>
-        <Logo height={20} theme={props.theme} />
-      </a>
-      <p>{props.title}</p>
+      <span className="left">
+        <a href={props.logoHref} title={props.logoTitle}>
+          <Logo height={20} theme={props.theme} />
+        </a>
+        <p>{props.title}</p>
+      </span>
+      <span className="center" />
+      <span className="right">
+        <p>Last Saved WTF</p>
+      </span>
     </header>
     <style jsx>{`
       header {
-        display: flex;
-        justify-content: flex-start;
         background-color: var(--theme-title-bar-bg, rgb(250, 250, 250));
         padding: var(--nt-spacing-m) var(--nt-spacing-xl);
+        display: flex;
       }
 
-      a {
+      header * {
+        box-sizing: border-box;
+      }
+
+      .left * {
         display: inline-block;
         margin: 0px var(--nt-spacing-xl) 0px 0px;
       }
 
       p {
-        display: inline-block;
+        vertical-align: top;
+        line-height: normal;
         margin: 0px var(--nt-spacing-xl) 0px 0px;
+      }
+
+      .left,
+      .center,
+      .right {
+        display: inline-block;
+        vertical-align: top;
+        width: 33.33333%;
+      }
+
+      .left {
+        text-align: left;
+      }
+
+      .center {
+        text-align: center;
+      }
+
+      .right {
+        text-align: right;
       }
     `}</style>
   </React.Fragment>

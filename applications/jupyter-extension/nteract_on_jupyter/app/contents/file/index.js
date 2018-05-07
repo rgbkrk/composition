@@ -10,6 +10,7 @@ import moment from "moment";
 
 import { ThemedLogo } from "../../components/themed-logo";
 import { Nav, NavSection } from "../../components/nav";
+import SlickNavButton from "../../components/slick-nav-button";
 
 import LastSaved from "../../components/last-saved.js";
 
@@ -64,7 +65,17 @@ export class File extends React.PureComponent<FileProps, *> {
         </PaddedContainer>
       );
     } else {
-      choice = <TextFile.default contentRef={this.props.contentRef} />;
+      choice = (
+        <React.Fragment>
+          <Nav>
+            <NavSection>
+              <SlickNavButton />
+              <button>Save</button>
+            </NavSection>
+          </Nav>
+          <TextFile.default contentRef={this.props.contentRef} />
+        </React.Fragment>
+      );
     }
 
     // Right now we only handle one kind of editor

@@ -27,6 +27,7 @@
     "@nteract/notebook-preview": "^7.1.1",
     "@nteract/octicons": "^0.2.0",
     "@nteract/presentational-components": "^0.0.1",
+    "@nteract/styles": "^1.0.1",
     "@nteract/timeago": "^3.4.9",
     "@nteract/transform-dataresource": "^3.0.2",
     "@nteract/transform-geojson": "^3.1.0",

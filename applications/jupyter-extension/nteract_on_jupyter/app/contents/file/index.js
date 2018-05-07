@@ -11,8 +11,8 @@ import moment from "moment";
 import { ThemedLogo } from "../../components/themed-logo";
 import { Nav, NavSection } from "../../components/nav";
 import SlickNavButton from "../../components/slick-nav-button";
-
 import LastSaved from "../../components/last-saved.js";
+import DevModeBanner from "../../components/dev-mode.js";
 
 import { dirname } from "path";
 
@@ -67,6 +67,7 @@ export class File extends React.PureComponent<FileProps, *> {
     } else {
       choice = (
         <React.Fragment>
+          <DevModeBanner />
           <Nav>
             <NavSection>
               <SlickNavButton />

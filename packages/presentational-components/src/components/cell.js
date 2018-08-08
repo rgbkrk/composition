@@ -33,6 +33,10 @@ export const Cell = (props: CellProps) => {
           transition: all 0.1s ease-in-out;
         }
 
+        .focused > :global(.outputs) {
+          overflow-y: auto;
+        }
+
         .cell.overrideHover,
         .cell:hover {
           box-shadow: var(

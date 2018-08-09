@@ -8,7 +8,7 @@ export type OutputsProps = {
   hidden: boolean
 };
 
-import * as classNames from "classnames";
+import classNames from "classnames";
 
 export class Outputs extends React.Component<OutputsProps> {
   static defaultProps = {
@@ -42,18 +42,23 @@ export class Outputs extends React.Component<OutputsProps> {
               /* When expanded, this is overtaken to 100% */
               max-height: 600px;
               text-overflow: ellipsis;
+
+              box-sizing: border-box;
             }
 
             .expanded {
               max-height: 100%;
             }
 
+            /*:not(.expanded):not(.focused)*/
+
             :not(.focused) {
               border: 3px solid green;
             }
 
             .focused {
-              overflow-y: auto;
+              background-color: DeepPink;
+              overflow-y: hidden;
             }
 
             .outputs :global(a) {

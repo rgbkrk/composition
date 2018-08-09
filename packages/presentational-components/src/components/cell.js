@@ -2,7 +2,7 @@
 
 import * as React from "react";
 
-import Outputs from "./outputs";
+import { Outputs } from "./outputs";
 
 type CellProps = {
   /**
@@ -64,23 +64,26 @@ export const Cell = (props: CellProps) => {
           background-color: var(--theme-cell-prompt-bg-focus, hsl(0, 0%, 90%));
           color: var(--theme-cell-prompt-fg-focus, hsl(0, 0%, 51%));
         }
-
-        .cell.focused :global(.outputs) {
-          overflow-y: auto;
-        }
-
-        .cell:not(.focused) :global(.outputs) {
-          border: 3px solid green;
-        }
       `}</style>
       {React.Children.map(children, child => {
         if (!child) {
           return null;
         }
 
+        console.log("type", child.type);
+
+        if (child.type === React.Fragment) {
+          console.warn("IT IS A FRAGMENT");
+          return React.Children.map(child.props.children, ch => {
+            console.log("ch ch ch ", ch.type);
+          });
+        }
+
         if (child.type === Outputs) {
+          // console.warn("outputs yo");
           return React.cloneElement(child, { focused: props.isSelected });
         }
+        // console.warn("not outputs yo");
         return child;
       })}
     </div>

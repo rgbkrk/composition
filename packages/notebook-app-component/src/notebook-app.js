@@ -294,17 +294,17 @@ class AnyCell extends React.PureComponent<AnyCellProps, *> {
             contentRef={contentRef}
           />
           {element}
-          <style jsx>{`
-            /*
-             * Show the cell-toolbar-mask if hovering on cell,
-             * cell was the last clicked (has .focused class).
-            */
-            :global(.cell:hover .cell-toolbar-mask),
-            :global(.cell.focused .cell-toolbar-mask) {
-              display: block;
-            }
-          `}</style>
         </Cell>
+        <style jsx>{`
+          /*
+           * Show the cell-toolbar-mask if hovering on cell,
+           * cell was the last clicked (has .focused class).
+          */
+          :global(.cell:hover .cell-toolbar-mask),
+          :global(.cell.focused .cell-toolbar-mask) {
+            display: block;
+          }
+        `}</style>
       </HijackScroll>
     );
   }

@@ -4,13 +4,18 @@ import * as React from "react";
 export type OutputsProps = {
   children: React.Node,
   expanded: boolean,
+  focused: boolean,
   hidden: boolean
 };
+
+import * as classNames from "classnames";
 
 export class Outputs extends React.Component<OutputsProps> {
   static defaultProps = {
     children: null,
     expanded: false,
+    // Default focus to true to behave in a "legacy way"
+    focused: true,
     hidden: false
   };
 
@@ -19,9 +24,14 @@ export class Outputs extends React.Component<OutputsProps> {
       return null;
     }
 
+    const className = classNames("outputs", {
+      expanded: this.props.expanded,
+      focused: this.props.focused
+    });
+
     if (this.props.children) {
       return (
-        <div className={`outputs${this.props.expanded ? " expanded" : ""}`}>
+        <div className={className}>
           {this.props.children}
           <style jsx>{`
             .outputs {
@@ -36,6 +46,14 @@ export class Outputs extends React.Component<OutputsProps> {
 
             .expanded {
               max-height: 100%;
+            }
+
+            :not(.focused) {
+              border: 3px solid green;
+            }
+
+            .focused {
+              overflow-y: auto;
             }
 
             .outputs :global(a) {

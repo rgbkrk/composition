@@ -2,6 +2,8 @@
 
 import * as React from "react";
 
+import Outputs from "./outputs";
+
 type CellProps = {
   /**
    * Indicates if a cell is selected
@@ -66,8 +68,21 @@ export const Cell = (props: CellProps) => {
         .cell.focused :global(.outputs) {
           overflow-y: auto;
         }
+
+        .cell:not(.focused) :global(.outputs) {
+          border: 3px solid green;
+        }
       `}</style>
-      {children}
+      {React.Children.map(children, child => {
+        if (!child) {
+          return null;
+        }
+
+        if (child.type === Outputs) {
+          return React.cloneElement(child, { focused: props.isSelected });
+        }
+        return child;
+      })}
     </div>
   );
 };

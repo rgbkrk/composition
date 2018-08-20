@@ -10,14 +10,10 @@ export type MathJaxContextType = {
   loaded: boolean
 };
 
-const MathJaxContext = React.createContext<MathJaxContextType>({
+const { Consumer, Provider } = React.createContext<MathJaxContextType>({
   loaded: false,
   MathJax: null
 });
-
-const MathJaxConsumer = MathJaxContext.Consumer;
-
-export { MathJaxConsumer };
 
 // MathJax expected to be a global and may be undefined
 declare var MathJax: ?Object;
@@ -44,7 +40,7 @@ export type Props = {
 /**
  * Context for loading MathJax
  */
-class LoadMathJax extends React.Component<Props, MathJaxContextType> {
+export class LoadMathJax extends React.Component<Props, MathJaxContextType> {
   static defaultProps = {
     src:
       "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML",
@@ -141,11 +137,7 @@ class LoadMathJax extends React.Component<Props, MathJaxContextType> {
 
     const children = this.props.children;
 
-    return (
-      <MathJaxContext.Provider value={this.state}>
-        {children}
-      </MathJaxContext.Provider>
-    );
+    return <Provider value={this.state}>{children}</Provider>;
   }
 }
 

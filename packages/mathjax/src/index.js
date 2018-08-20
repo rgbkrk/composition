@@ -1,8 +1,8 @@
 // @flow
 
 import Node from "./node";
-import Context from "./context";
+import LoadMathJax from "./context";
 import Text from "./text";
 
-export { Node, Context, Text };
-export default { Node, Context, Text };
+export { Node, LoadMathJax, Text };
+export default { Node, LoadMathJax, Text };
